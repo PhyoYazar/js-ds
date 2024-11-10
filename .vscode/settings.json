@@ -1,0 +1,9 @@
+{
+  "tabnine.codeLensEnabled": true,
+  "tabnine.disableFileRegex": [
+    // "[.]md$",
+    // "[.]html$",
+    // "[.]css$",
+    "[.]js$"
+  ]
+}
