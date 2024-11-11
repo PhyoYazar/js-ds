@@ -1,4 +1,4 @@
-// example => browser history, routing, control+Z action
+// example => browser history, routing, control+Z action (undo/redo)
 
 class Node {
   constructor(value) {
@@ -14,6 +14,7 @@ class Stack {
     this.size = 0;
   }
 
+  // this 'push' add the first/latest place of the stack
   push(value) {
     const newNode = new Node(value);
 
@@ -29,6 +30,7 @@ class Stack {
     return ++this.size;
   }
 
+  // this `pop` is remove the first/latest one come into the stack
   pop() {
     if (this.size === 0) return undefined;
 
@@ -40,6 +42,7 @@ class Stack {
     this.first = firstNode.next;
     this.size--;
 
+    firstNode.next = null;
     return firstNode.value;
   }
 }
