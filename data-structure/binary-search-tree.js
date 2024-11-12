@@ -158,12 +158,72 @@ class BinarySearchTree {
     }
   }
 
-  // Helper function for in-order traversal (for testing)
-  inOrderTraversal(node = this.root, result = []) {
+  //============================ Tree Traversal ============================
+
+  // Breath first search
+  //   ->                20
+  //   ->         8      ->       25
+  //   ->     5  ->  9   ->   21  ->  28
+  //   output => [20 ,8 ,25 ,5 ,9 ,21 ,28]
+  BFSTraversal(node = this.root, result = []) {
     if (!node) return result;
-    this.inOrderTraversal(node.left, result);
+
+    const queue = []; //FIFO (use array as queue)
+    queue.push(node);
+
+    while (queue.length) {
+      node = queue.shift();
+      result.push(node.value);
+
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+
+    return result;
+  }
+
+  // Depth first search - PreOrder
+  //                20
+  //         8             25
+  //      5     9       21    28
+  //   output => [20 ,8 ,5 ,9 ,25 ,21 ,28]
+  preOrderDFSTraversal(node = this.root, result = []) {
+    if (!node) return result;
+
     result.push(node.value);
-    this.inOrderTraversal(node.right, result);
+    this.preOrderDFSTraversal(node.left, result);
+    this.preOrderDFSTraversal(node.right, result);
+
+    return result;
+  }
+
+  // Depth first search - PostOrder
+  //                20
+  //         8             25
+  //      5     9       21    28
+  //   output => [5 ,9 ,8 ,21 ,28 ,25 ,20]
+  postOrderDFSTraversal(node = this.root, result = []) {
+    if (!node) return result;
+
+    this.postOrderDFSTraversal(node.left, result);
+    this.postOrderDFSTraversal(node.right, result);
+    result.push(node.value);
+
+    return result;
+  }
+
+  // Depth first search - InOrder
+  //                20
+  //         8             25
+  //      5     9       21    28
+  //   output => [5 ,8 ,9 ,20 ,21 ,25 ,28]
+  inOrderDFSTraversal(node = this.root, result = []) {
+    if (!node) return result;
+
+    this.inOrderDFSTraversal(node.left, result);
+    result.push(node.value);
+    this.inOrderDFSTraversal(node.right, result);
+
     return result;
   }
 }
@@ -179,25 +239,47 @@ const tree = new BinarySearchTree();
 // tree.insert(4);
 // tree.insert(5);
 
-tree.insert(20);
-tree.insert(12);
-tree.insert(7);
-tree.insert(9);
-tree.insert(5);
-tree.insert(6);
-tree.insert(2);
-tree.insert(15);
-tree.insert(25);
-tree.insert(4);
+// tree.insert(20);
+// tree.insert(12);
+// tree.insert(7);
+// tree.insert(9);
+// tree.insert(5);
+// tree.insert(6);
+// tree.insert(2);
+// tree.insert(15);
+// tree.insert(25);
+// tree.insert(4);
 
 // console.log(tree.find(1));
 // console.log(tree.find(100));
 // console.log(tree.find(5));
 // console.log(tree.find(3));
 
-console.log(tree.inOrderTraversal());
-console.log(tree.remove(5));
-console.log(tree.inOrderTraversal());
+// console.log(tree.inOrderTraversal());
+// console.log(tree.remove(5));
+// console.log(tree.inOrderTraversal());
 
-console.log(tree.find(7));
+// console.log(tree.find(7));
 // console.log(tree.root.right.left);
+
+// traversal test
+
+tree.insert(20);
+tree.insert(8);
+tree.insert(5);
+tree.insert(9);
+tree.insert(25);
+tree.insert(21);
+tree.insert(28);
+
+// // [20 ,8 ,25 ,5 ,9 ,21 ,28]
+// console.log(tree.BFSTraversal());
+
+// // [20 ,8 ,5 ,9 ,25 ,21 ,28]
+// console.log(tree.preOrderDFSTraversal());
+
+// [5 ,9 ,8 ,21 ,28 ,25 ,20]
+console.log(tree.postOrderDFSTraversal());
+
+// // [5 ,8 ,9 ,20 ,21 ,25 ,28]
+// console.log(tree.inOrderDFSTraversal());
